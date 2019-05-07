@@ -1,0 +1,98 @@
+{
+    "type": "object",
+    "properties": {
+        "Action": {
+            "required": true,
+            "type": "string"
+        },
+        "Version": {
+            "required": true,
+            "type": "string"
+        },
+        "requestBody": {
+            "description": "A BatchMeterUsageRequest contains UsageRecords, which indicate quantities of usage within your application.",
+            "properties": {
+                "ProductCode": {
+                    "description": "Product code is used to uniquely identify a product in AWS Marketplace. The product code should be the same as the one used during the publishing of a new product.",
+                    "maxLength": 255,
+                    "minLength": 1,
+                    "type": "string"
+                },
+                "UsageRecords": {
+                    "description": "The set of UsageRecords to submit. BatchMeterUsage accepts up to 25 UsageRecords at a time.",
+                    "items": {
+                        "description": "<p>A UsageRecord indicates a quantity of usage for a given product, customer, dimension and time.</p> <p>Multiple requests with the same UsageRecords as input will be deduplicated to prevent double charges.</p>",
+                        "properties": {
+                            "CustomerIdentifier": {
+                                "description": "The CustomerIdentifier is obtained through the ResolveCustomer operation and represents an individual buyer in your application.",
+                                "maxLength": 255,
+                                "minLength": 1,
+                                "type": "string"
+                            },
+                            "Dimension": {
+                                "description": "During the process of registering a product on AWS Marketplace, up to eight dimensions are specified. These represent different units of value in your application.",
+                                "maxLength": 255,
+                                "minLength": 1,
+                                "type": "string"
+                            },
+                            "Quantity": {
+                                "description": "The quantity of usage consumed by the customer for the given dimension and time.",
+                                "maximum": 1000000,
+                                "minimum": 0,
+                                "type": "integer"
+                            },
+                            "Timestamp": {
+                                "description": "<p>Timestamp of the hour, recorded in UTC. The seconds and milliseconds portions of the timestamp will be ignored.</p> <p>Your application can meter usage for up to one hour in the past.</p>",
+                                "format": "date-time",
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "Timestamp",
+                            "CustomerIdentifier",
+                            "Dimension",
+                            "Quantity"
+                        ],
+                        "type": "object"
+                    },
+                    "maxItems": 25,
+                    "minItems": 0,
+                    "type": "array"
+                }
+            },
+            "required": [
+                "UsageRecords",
+                "ProductCode"
+            ],
+            "type": "object"
+        },
+        "X_Amz_Content_Sha256": {
+            "required": false,
+            "type": "string"
+        },
+        "X_Amz_Date": {
+            "required": false,
+            "type": "string"
+        },
+        "X_Amz_Algorithm": {
+            "required": false,
+            "type": "string"
+        },
+        "X_Amz_Credential": {
+            "required": false,
+            "type": "string"
+        },
+        "X_Amz_Security_Token": {
+            "required": false,
+            "type": "string"
+        },
+        "X_Amz_Signature": {
+            "required": false,
+            "type": "string"
+        },
+        "X_Amz_SignedHeaders": {
+            "required": false,
+            "type": "string"
+        }
+    }
+}
